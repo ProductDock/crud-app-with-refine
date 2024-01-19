@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - demo
+  etcd:
+    image: bitnami/etcd:3.5.7
+    container_name: etcd
+    ports:
+      - "2379:2379"
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    networks:
+      - demo
+  apisix:
+    image: apache/apisix:3.7.0-debian
+    container_name: apisix
+    ports:
+      - "9080:9080"
+      - "9180:9180"
+      - "9443:9443"
+      - "9090:9092"
+      - "9100:9100"
+    environment:
+      - APISIX_DEPLOYMENT_ETCD_HOST=["http://etcd:2379"]
+    volumes:
+      - ./apisix/config.yaml:/usr/local/apisix/conf/config.yaml
+    networks:
+      - demo
+  apisix-dashoard:
+    image: apache/apisix-dashboard
+    container_name: apisix-dashboard
+    ports:
+      - "9005:9000"
+    volumes:
+      - ./apisix/dashboard-config.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    networks:
+      - demo
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    command:
+      - start-dev --import-realm --log-level=INFO
+    container_name: keycloak
+    ports:
+      - "8081:8080"
+    volumes:
+      -  ./keycloak:/opt/keycloak/data/import
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    networks:
+      - demo
+
+networks:
+  demo:
+    driver: bridge
