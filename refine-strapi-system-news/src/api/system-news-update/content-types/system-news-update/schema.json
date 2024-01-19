@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "system_news_updates",
+  "info": {
+    "singularName": "system-news-update",
+    "pluralName": "system-news-updates",
+    "displayName": "System news update"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "blocks"
+    }
+  }
+}
