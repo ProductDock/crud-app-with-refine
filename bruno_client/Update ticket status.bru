@@ -1,0 +1,21 @@
+meta {
+  name: Update ticket status
+  type: http
+  seq: 4
+}
+
+patch {
+  url: http://localhost:8080/tickets/2c5240dc-b5eb-11ee-939f-d2009e021aec/status
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+   "event":"Done"
+  }
+}
+
+body:text {
+  "WIP"
+}

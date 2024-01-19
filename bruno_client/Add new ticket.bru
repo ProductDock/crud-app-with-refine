@@ -1,0 +1,21 @@
+meta {
+  name: Add new ticket
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/tickets
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "JIRA access",
+    "description": "I need temp jira access",
+    "priority": "URGENT",
+    "category": "TOOLS",
+    "dueDate": "20.01.2024"
+  }
+}

@@ -1,0 +1,21 @@
+meta {
+  name: Get all tickets
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8080/tickets
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Slack access",
+    "description": "I need temp slack access",
+    "priority": "URGENT",
+    "category": "TOOLS",
+    "dueDate": "20.01.2024"
+  }
+}
